@@ -140,3 +140,15 @@ def get_available_sources():
     mod = _get_proj_module_()
     model = _get_configured_model_()
     return mod.get_valid_sources(model)
+
+
+def main():
+    """
+Run simple test.
+"""
+    report()
+    do_cmd(lib.CMD_PWR_ON)
+    set_source('HDMI')
+
+if __name__ == '__main__':
+    main()
