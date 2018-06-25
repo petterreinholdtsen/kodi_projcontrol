@@ -3,6 +3,8 @@ VERSION := $(shell grep '  version=' addon.xml |cut -d\" -f2)
 FILES = addon.xml service.py lib resources changelog.txt LICENSE
 REPO_PLUGINS ?= ../repo-plugins
 RELEASE_BRANCH ?= krypton
+TEST_PI_ADDRESS ?= projector.local
+TEST_PI_USER ?= root
 
 all: dist
 
@@ -21,6 +23,10 @@ prepare_release:
 	rm -rf $(REPO_PLUGINS)/plugin.$(ADDON_NAME)
 	mkdir $(REPO_PLUGINS)/plugin.$(ADDON_NAME)
 	cp -r $(FILES) $(REPO_PLUGINS)/plugin.$(ADDON_NAME)/
+
+test_deploy: dist
+	scp plugin.$(ADDON_NAME)-*.zip $(TEST_PI_USER)@$(TEST_PI_ADDRESS):/storage/.
+	echo "Now visit the plugin menu in kodi to install from zip file."
 
 clean:
 	rm *.zip
